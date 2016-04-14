@@ -1,0 +1,34 @@
+#! /bin/bash
+
+func1()
+{
+	cd ~/robocar-emulator/justine/rcemu/ && src/smartcity --osm=../debrecen.osm --city=Debrecen --shm=DebrecenSharedMemory --node2gps=../debrecen-lmap.txt
+}
+
+func2()
+{
+	cd ~/robocar-emulator/justine/rcemu/ && src/traffic --port=10007 --shm=DebrecenSharedMemory
+}
+
+func3()
+{
+    	cd ~/robocar-emulator/justine/rcwin/ && java -jar target/site/justine-rcwin-0.0.16-jar-with-dependencies.jar ../debrecen-lmap.txt
+}
+
+func4()
+{
+    	cd ~/robocar-emulator/justine/rcemu/ && 
+	{
+		(sleep 1; echo '<init Norbi 100 g>'; sleep 1)|telnet localhost 10007
+		src/samplemyshmclient --port=10007 --shm=DebrecenSharedMemory --team=GGOutplayed --cops=1
+	}
+}
+export -f func1
+gnome-terminal -e "bash -c 'func1'" --window-with-profile=Robocar
+sleep 10
+export -f func2
+gnome-terminal -e "bash -c 'func2'" --window-with-profile=Robocar
+export -f func3
+gnome-terminal -e "bash -c 'func3'" --window-with-profile=Robocar
+export -f func4
+gnome-terminal -e "bash -c 'func4'" --window-with-profile=Robocar
