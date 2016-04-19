@@ -120,7 +120,8 @@ host_triplet = @host@
 DIST_COMMON = $(srcdir)/aminclude.am INSTALL NEWS README AUTHORS \
 	ChangeLog $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) COPYING THANKS \
-	compile config.guess config.sub install-sh missing ltmain.sh
+	compile config.guess config.sub depcomp install-sh missing \
+	ylwrap ltmain.sh
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/boost.m4 \

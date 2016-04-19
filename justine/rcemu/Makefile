@@ -120,7 +120,8 @@ host_triplet = x86_64-unknown-linux-gnu
 DIST_COMMON = $(srcdir)/aminclude.am INSTALL NEWS README AUTHORS \
 	ChangeLog $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) COPYING THANKS \
-	compile config.guess config.sub install-sh missing ltmain.sh
+	compile config.guess config.sub depcomp install-sh missing \
+	ylwrap ltmain.sh
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/boost.m4 \
@@ -273,7 +274,7 @@ CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS =  -Wall -std=c++1y -O3
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"justine\" -DPACKAGE_TARNAME=\"justine\" -DPACKAGE_VERSION=\"0.0.17\" -DPACKAGE_STRING=\"justine\ 0.0.17\" -DPACKAGE_BUGREPORT=\"nbatfai@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"justine\" -DVERSION=\"0.0.17\" -DHAVE_LIBPTHREAD=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_BOOST=1 -DHAVE_BOOST_GRAPH_ADJACENCY_LIST_HPP=1 -DHAVE_BOOST_SYSTEM_ERROR_CODE_HPP=1 -DHAVE_BOOST_PROGRAM_OPTIONS_HPP=1 -DHAVE_BOOST_SYSTEM_ERROR_CODE_HPP=1 -DHAVE_BOOST_THREAD_HPP=1 -DHAVE_BOOST_ASIO_HPP=1 -DHAVE_BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_HPP=1 -DHAVE_SHM_OPEN=1
+DEFS = -DPACKAGE_NAME=\"justine\" -DPACKAGE_TARNAME=\"justine\" -DPACKAGE_VERSION=\"0.0.17\" -DPACKAGE_STRING=\"justine\ 0.0.17\" -DPACKAGE_BUGREPORT=\"nbatfai@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"justine\" -DVERSION=\"0.0.17\" -DHAVE_LIBPTHREAD=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_BOOST=1 -DHAVE_BOOST_GRAPH_ADJACENCY_LIST_HPP=1 -DHAVE_BOOST_SYSTEM_ERROR_CODE_HPP=1 -DHAVE_BOOST_PROGRAM_OPTIONS_HPP=1 -DHAVE_BOOST_SYSTEM_ERROR_CODE_HPP=1 -DHAVE_BOOST_THREAD_HPP=1 -DHAVE_BOOST_ASIO_HPP=1 -DHAVE_BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_HPP=1 -DHAVE_OSMIUM_OSM_RELATION_HPP=1 -DHAVE_OSMIUM_IO_ANY_INPUT_HPP=1 -DHAVE_SHM_OPEN=1
 DEPDIR = .deps
 DISTCHECK_CONFIGURE_FLAGS =  '--with-boost='
 DLLTOOL = false
@@ -286,21 +287,21 @@ DX_DOT =
 DX_DOXYGEN = /usr/bin/doxygen
 DX_DVIPS = 
 DX_EGREP = /bin/egrep
-DX_ENV =  SRCDIR='.' PROJECT='justine' DOCDIR='doc' VERSION='0.0.17' PERL_PATH='/usr/bin/perl' HAVE_DOT='NO' GENERATE_MAN='NO' GENERATE_RTF='NO' GENERATE_XML='NO' GENERATE_HTMLHELP='NO' GENERATE_CHI='NO' GENERATE_HTML='YES' GENERATE_LATEX='NO'
+DX_ENV =  SRCDIR='.' PROJECT='justine' DOCDIR='doc' VERSION='0.0.17' PERL_PATH='/usr/bin/perl' HAVE_DOT='NO' GENERATE_MAN='NO' GENERATE_RTF='NO' GENERATE_XML='NO' GENERATE_HTMLHELP='NO' GENERATE_CHI='NO' GENERATE_HTML='YES' GENERATE_LATEX='YES'
 DX_FLAG_chi = 0
 DX_FLAG_chm = 0
 DX_FLAG_doc = 1
 DX_FLAG_dot = 0
 DX_FLAG_html = 1
 DX_FLAG_man = 0
-DX_FLAG_pdf = 0
+DX_FLAG_pdf = 1
 DX_FLAG_ps = 0
 DX_FLAG_rtf = 0
 DX_FLAG_xml = 0
 DX_HHC = 
 DX_LATEX = 
-DX_MAKEINDEX = 
-DX_PDFLATEX = 
+DX_MAKEINDEX = /usr/bin/makeindex
+DX_PDFLATEX = /usr/bin/pdflatex
 DX_PERL = /usr/bin/perl
 DX_PROJECT = justine
 ECHO_C = 
@@ -422,9 +423,9 @@ DX_CLEAN_HTML = doc/html
 #DX_CLEAN_XML = doc/xml
 #DX_CLEAN_PS = doc/justine.ps
 #DX_PS_GOAL = doxygen-ps
-#DX_CLEAN_PDF = doc/justine.pdf
-#DX_PDF_GOAL = doxygen-pdf
-#DX_CLEAN_LATEX = doc/latex
+DX_CLEAN_PDF = doc/justine.pdf
+DX_PDF_GOAL = doxygen-pdf
+DX_CLEAN_LATEX = doc/latex
 DX_CLEANFILES = \
 doc/justine.tag \
 -r \
@@ -922,22 +923,22 @@ uninstall-am:
 #	done; \
 #	$(DX_DVIPS) -o ../justine.ps refman.dvi
 
-#doxygen-pdf:	doc/justine.pdf
+doxygen-pdf:	doc/justine.pdf
 
-#doc/justine.pdf:	doc/justine.tag
-#	cd doc/latex; \
-#	rm -f *.aux *.toc *.idx *.ind *.ilg *.log *.out; \
-#	$(DX_PDFLATEX) refman.tex; \
-#	$(DX_MAKEINDEX) refman.idx; \
-#	$(DX_PDFLATEX) refman.tex; \
-#	countdown=5; \
-#	while $(DX_EGREP) 'Rerun (LaTeX|to get cross-references right)' \
-#		refman.log > /dev/null 2>&1 \
-#		&& test $$countdown -gt 0; do \
-#		$(DX_PDFLATEX) refman.tex; \
-#		countdown=`expr $$countdown - 1`; \
-#	done; \
-#	mv refman.pdf ../justine.pdf
+doc/justine.pdf:	doc/justine.tag
+	cd doc/latex; \
+	rm -f *.aux *.toc *.idx *.ind *.ilg *.log *.out; \
+	$(DX_PDFLATEX) refman.tex; \
+	$(DX_MAKEINDEX) refman.idx; \
+	$(DX_PDFLATEX) refman.tex; \
+	countdown=5; \
+	while $(DX_EGREP) 'Rerun (LaTeX|to get cross-references right)' \
+		refman.log > /dev/null 2>&1 \
+		&& test $$countdown -gt 0; do \
+		$(DX_PDFLATEX) refman.tex; \
+		countdown=`expr $$countdown - 1`; \
+	done; \
+	mv refman.pdf ../justine.pdf
 
 .PHONY:	doxygen-run doxygen-doc $(DX_PS_GOAL) $(DX_PDF_GOAL)
 

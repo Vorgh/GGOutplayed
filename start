@@ -20,7 +20,7 @@ func4()
     	cd ~/robocar-emulator/justine/rcemu/ && 
 	{
 		(sleep 1; echo '<init Norbi 100 g>'; sleep 1)|telnet localhost 10007
-		src/samplemyshmclient --port=10007 --shm=DebrecenSharedMemory --team=GGOutplayed --cops=1
+		src/samplemyshmclient --port=10007 --shm=DebrecenSharedMemory --team=GGOutplayed
 	}
 }
 export -f func1

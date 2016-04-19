@@ -658,7 +658,7 @@ finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
 finish_eval=''
 hardcode_into_libs='yes'
 sys_lib_search_path_spec='/usr/lib/gcc/x86_64-linux-gnu/4.8 /usr/lib/x86_64-linux-gnu /usr/lib /lib/x86_64-linux-gnu /lib '
-sys_lib_dlsearch_path_spec='/lib64 /usr/lib64 /lib /usr/lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/mesa-egl /usr/lib/x86_64-linux-gnu/mesa '
+sys_lib_dlsearch_path_spec='/lib64 /usr/lib64 /lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/mesa-egl /usr/lib/x86_64-linux-gnu/mesa /lib32 /usr/lib32 '
 hardcode_action='immediate'
 enable_dlopen='unknown'
 enable_dlopen_self='unknown'
@@ -916,17 +916,17 @@ S["build"]="x86_64-unknown-linux-gnu"
 S["LIBTOOL"]="$(SHELL) $(top_builddir)/libtool"
 S["HAVE_CXX11"]=""
 S["DOXYGEN_PAPER_SIZE"]=""
-S["DX_COND_latex_FALSE"]=""
-S["DX_COND_latex_TRUE"]="#"
-S["DX_COND_pdf_FALSE"]=""
-S["DX_COND_pdf_TRUE"]="#"
-S["DX_PDFLATEX"]=""
-S["DX_FLAG_pdf"]="0"
+S["DX_COND_latex_FALSE"]="#"
+S["DX_COND_latex_TRUE"]=""
+S["DX_COND_pdf_FALSE"]="#"
+S["DX_COND_pdf_TRUE"]=""
+S["DX_PDFLATEX"]="/usr/bin/pdflatex"
+S["DX_FLAG_pdf"]="1"
 S["DX_COND_ps_FALSE"]=""
 S["DX_COND_ps_TRUE"]="#"
 S["DX_EGREP"]="/bin/egrep"
 S["DX_DVIPS"]=""
-S["DX_MAKEINDEX"]=""
+S["DX_MAKEINDEX"]="/usr/bin/makeindex"
 S["DX_LATEX"]=""
 S["DX_FLAG_ps"]="0"
 S["DX_COND_html_FALSE"]="#"
@@ -958,7 +958,7 @@ S["DX_PERL"]="/usr/bin/perl"
 S["DX_DOXYGEN"]="/usr/bin/doxygen"
 S["DX_FLAG_doc"]="1"
 S["DX_ENV"]=" SRCDIR='.' PROJECT='justine' DOCDIR='doc' VERSION='0.0.17' PERL_PATH='/usr/bin/perl' HAVE_DOT='NO' GENERATE_MAN='NO' GENERATE_RTF='NO' GENERATE_XML"\
-"='NO' GENERATE_HTMLHELP='NO' GENERATE_CHI='NO' GENERATE_HTML='YES' GENERATE_LATEX='NO'"
+"='NO' GENERATE_HTMLHELP='NO' GENERATE_CHI='NO' GENERATE_HTML='YES' GENERATE_LATEX='YES'"
 S["DX_DOCDIR"]="doc"
 S["DX_CONFIG"]="Doxyfile"
 S["DX_PROJECT"]="justine"
@@ -1029,7 +1029,7 @@ S["DEFS"]="-DPACKAGE_NAME=\\\"justine\\\" -DPACKAGE_TARNAME=\\\"justine\\\" -DPA
 "STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLF"\
 "CN_H=1 -DLT_OBJDIR=\\\".libs/\\\" -DHAVE_BOOST=1 -DHAVE_BOOST_GRAPH_ADJACENCY_LIST_HPP=1 -DHAVE_BOOST_SYSTEM_ERROR_CODE_HPP=1 -DHAVE_BOOST_PROGRAM_OPTIO"\
 "NS_HPP=1 -DHAVE_BOOST_SYSTEM_ERROR_CODE_HPP=1 -DHAVE_BOOST_THREAD_HPP=1 -DHAVE_BOOST_ASIO_HPP=1 -DHAVE_BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_HPP=1 -"\
-"DHAVE_SHM_OPEN=1"
+"DHAVE_OSMIUM_OSM_RELATION_HPP=1 -DHAVE_OSMIUM_IO_ANY_INPUT_HPP=1 -DHAVE_SHM_OPEN=1"
 S["mandir"]="${datarootdir}/man"
 S["localedir"]="${datarootdir}/locale"
 S["libdir"]="${exec_prefix}/lib"

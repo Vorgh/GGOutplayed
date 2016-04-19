@@ -343,7 +343,8 @@ void justine::sampleclient::MyShmClient::start ( boost::asio::io_service& io_ser
 
     std::vector<std::vector<std::vector<double>>> database;
     int checktimer = 0;
-    bool firstblood = true;
+    int presize = 0;
+
 
     for ( ;; )
     {
@@ -353,60 +354,79 @@ void justine::sampleclient::MyShmClient::start ( boost::asio::io_service& io_ser
         {
             car ( socket, cops[i], &f, &t, &s );
             gngstrs = gangsters ( socket, cops[i], t );
+	    
+	    g = gngstrs[0].to; //Hogy biztos ne akadjon be
 
             if ( gngstrs.size() > 0 )
             {
-		if (firstblood)
-		{
-		    database.resize(cops.size());
-		    for (int j=0; j<cops.size(); j++)
-		    {
-			database[j].resize(gngstrs.size());
-			for (int k=0; k<gngstrs.size(); k++)
-			{
-			    database[j][k].resize(5);
-			}
-		    }
-		    firstblood = false;
-		}
-		
+                if ( gngstrs.size() != presize )
+                {
+                    database.clear();
+                    database.resize ( cops.size() );
+
+                    for ( int j = 0; j < cops.size(); j++ )
+                    {
+                        database[j].resize ( gngstrs.size() );
+
+                        for ( int k = 0; k < gngstrs.size(); k++ )
+                        {
+                            database[j][k].resize ( 5 );
+                        }
+                    }
+                    
+		    presize = gngstrs.size();
+                    checktimer = 0;
+                }
+
                 if ( checktimer < 5 )
                 {
-                    for ( int k = 0; k < gngstrs.size(); k++ )
+		    int loopsize = gngstrs.size();
+                    for ( int k = 0; k < loopsize; k++ )
                     {
                         Gangster gng = gngstrs[k];
                         database[i][k].push_back ( dst ( gng.to, t ) );
                     }
-		    
-		    g = gngstrs[0].to;
+
+                    std::vector<Gangster> tmp_gngstrs = gngstrs;
+                    std::sort ( tmp_gngstrs.begin(), tmp_gngstrs.end(), [this, t] ( Gangster x, Gangster y )
+                    {
+                        return dst ( t, x.to ) < dst ( t, y.to );
+                    } );
+
+                    g = tmp_gngstrs[0].to;
                 }
                 else
                 {
-		    double maxpriority = 10000;
-		    int g_id = 0;
-		    double priority;
-		    std::vector<double> vect;
-		    vect.resize(5);
-		    
-                    for ( int j = 0; j < gngstrs.size(); j++ )
+                    double maxpriority = 100000;
+                    int g_id = 0;
+                    double priority;
+                    std::vector<double> vect;
+                    vect.resize ( 5 );
+		    int loopsize = gngstrs.size();
+
+                    for ( int j = 0; j < loopsize; j++ )
                     {
-			Gangster gng = gngstrs[j];
-			vect = database[i][j];
-			double distance = dst(t, gng.to);
-                        priority = distance - (vect.front() - distance);
-			if (priority < maxpriority)
-			{
-			    maxpriority = priority;
-			    g_id = j;
-			}
-			
-			std::rotate(vect.begin(),vect.begin()+1,vect.end());
-			vect.back() = distance;
-			database[i][j] = vect;
-			
+                        Gangster gng = gngstrs[j];
+                        vect = database[i][j];
+                        double distance = dst ( t, gng.to );
+                        priority = distance - ( vect.front() - distance );
+
+                        if ( priority < maxpriority )
+                        {
+                            maxpriority = priority;
+                            g_id = j;
+                        }
+
+                        std::rotate ( vect.begin(), vect.begin() + 1, vect.end() );
+                        vect.back() = distance;
+                        database[i][j] = vect;
+
                     }
-                    g = gngstrs[g_id].to; 
+
+                    g = gngstrs[g_id].to;
+
                 }
+
             }
             else
                 g = 0;
@@ -422,8 +442,32 @@ void justine::sampleclient::MyShmClient::start ( boost::asio::io_service& io_ser
 
                     route ( socket, cops[i], path );
                 }
+                else
+                {
+		    std::vector<Gangster> tmp_gngstrs = gngstrs;
+                    std::sort ( tmp_gngstrs.begin(), tmp_gngstrs.end(), [this, t] ( Gangster x, Gangster y )
+                    {
+                        return dst ( t, x.to ) < dst ( t, y.to );
+                    } );
+
+                    for ( int j = 0; j < gngstrs.size(); j++ )
+                    {
+                        g = tmp_gngstrs[j].to;
+                        path = hasDijkstraPath ( t, g );
+
+                        if ( path.size() > 1 )
+                        {
+                            std::copy ( path.begin(), path.end(),
+                                        std::ostream_iterator<osmium::unsigned_object_id_type> ( std::cout, " -> " ) );
+
+                            route ( socket, cops[i], path );
+                            break;
+                            }
+                        }
+                }
             }
         }
+        
         checktimer++;
     }
 }
