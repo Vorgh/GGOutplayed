@@ -255,11 +255,11 @@ void justine::robocar::Traffic::cmd_session ( boost::asio::ip::tcp::socket clien
                 {
 
                   bool hasCops {false};
-                  for ( auto c:m_cop_cars )
+                  for ( std::vector<std::shared_ptr<CopCar>>::iterator it = m_cop_cars.begin(); it != m_cop_cars.end(); it++)
                     {
                       length += std::sprintf ( data+length,
                                                "<OK %d %u %u %u %d>", cl.get_id(), c->from(),
-                                               c->to_node(), c->get_step(), c->get_num_captured_gangsters() );
+                                               (*(*it)).to_node(), (*(*it)).get_step(), (*(*it)).get_num_captured_gangsters() );
 
                       if ( length > network_buffer_size - 512 )
                         {
